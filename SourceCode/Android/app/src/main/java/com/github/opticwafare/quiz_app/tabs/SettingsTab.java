@@ -1,5 +1,7 @@
 package com.github.opticwafare.quiz_app.tabs;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.github.opticwafare.quiz_app.MainActivity;
@@ -15,8 +17,11 @@ public class SettingsTab extends SuperTab {
     private EditText editTextPort;
     private EditText editTextServerName;
 
-    public SettingsTab() {
+    private boolean showLogoutButton = true;
+
+    public SettingsTab(boolean showLogoutButton) {
         super("Einstellungen", R.layout.activity_settings);
+        this.showLogoutButton = showLogoutButton;
     }
 
     @Override
@@ -35,5 +40,18 @@ public class SettingsTab extends SuperTab {
         editTextIP.addTextChangedListener(new EditTextIPAddressChangedListener());
         editTextPort.addTextChangedListener(new EditTextPortChangedListener());
         //editTextServerName.addTextChangedListener(new EditTextServerNameChangedListener());
+
+        Button buttonLogout = (Button) mainActivity.findViewById(R.id.button_settings_logout);
+        if(showLogoutButton == false) {
+            buttonLogout.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public boolean isShowLogoutButton() {
+        return showLogoutButton;
+    }
+
+    public void setShowLogoutButton(boolean showLogoutButton) {
+        this.showLogoutButton = showLogoutButton;
     }
 }

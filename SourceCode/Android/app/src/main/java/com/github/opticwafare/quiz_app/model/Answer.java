@@ -12,6 +12,16 @@ public class Answer {
 
     }
 
+    /**
+     * Nur zum testen
+     * @param text
+     * @param correct
+     */
+    public Answer(String text, boolean correct) {
+        this.text = text;
+        this.correct = correct;
+    }
+
     public int getAnswerid() {
         return answerid;
     }

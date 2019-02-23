@@ -38,6 +38,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_question_number" />
 
+    <!--
     <CheckBox
         android:id="@+id/checkBox_question_answer_1"
         android:layout_width="0dp"
@@ -89,9 +90,94 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox_question_answer_3" />
+-->
+    <CheckBox
+        android:id="@+id/checkBox_question_answer_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_question_questionText" />
+
+    <EditText
+        android:id="@+id/editText_question_answer_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Antwort 1"
+        android:inputType="textPersonName"
+        app:layout_constraintLeft_toRightOf="@+id/checkBox_question_answer_1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_question_questionText" />
+
+    <CheckBox
+        android:id="@+id/checkBox_question_answer_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_question_answer_1" />
+
+    <EditText
+        android:id="@+id/editText_question_answer_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:ems="10"
+        android:hint="Antwort 2"
+        android:inputType="textPersonName"
+        app:layout_constraintLeft_toRightOf="@+id/checkBox_question_answer_2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_question_answer_1" />
+
+    <CheckBox
+        android:id="@+id/checkBox_question_answer_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_question_answer_2" />
+
+    <EditText
+        android:id="@+id/editText_question_answer_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:ems="10"
+        android:hint="Antwort 3"
+        android:inputType="textPersonName"
+        app:layout_constraintLeft_toRightOf="@+id/checkBox_question_answer_3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_question_answer_2" />
+
+    <CheckBox
+        android:id="@+id/checkBox_question_answer_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_question_answer_3" />
+
+    <EditText
+        android:id="@+id/editText_question_answer_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:ems="10"
+        android:hint="Antwort 4"
+        android:inputType="textPersonName"
+        app:layout_constraintLeft_toRightOf="@+id/checkBox_question_answer_4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_question_answer_3" />
 
     <View
-        android:id="@+id/question_divider_1"
+        android:id="@+id/divider_question_1"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
@@ -100,26 +186,6 @@
         android:background="#1c1c1c"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox_question_answer_4" />
-
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteY="374dp" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintLeft_toRightOf="@+id/checkBox2"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="367dp" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_question_answer_4" />
 
 </android.support.constraint.ConstraintLayout>

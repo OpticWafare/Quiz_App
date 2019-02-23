@@ -26,7 +26,7 @@ public class InsertQuestionsTab extends SuperTab {
         Question question = new Question();
 
         QuestionElement questionElement = new QuestionElement();
-        ViewGroup questionElementUI = questionElement.showCreate(inflater, linearLayout, question, 1);
+        ViewGroup questionElementUI = questionElement.show_create(inflater, linearLayout, 1);
 
         linearLayout.addView(questionElementUI);
     }

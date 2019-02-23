@@ -26,9 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO Local Storage auslesen und rausfinden, ob user eingeloggt ist
 
-        // View Pager (Tabs) erstellen
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-
         // Wenn kein User eingeloggt ist...
         if (User.getLoggedInUser() == null) {
             // ... Login & Register Menü anzeigen
@@ -40,16 +37,18 @@ public class MainActivity extends AppCompatActivity {
             pagerAdapter = new MainPagerAdapter(this);
         }
 
-        // Ausgewählten PagerAdapter im ViewPager setzen
-        viewPager.setAdapter(pagerAdapter);
+        // TODO test
+        //pagerAdapter = new MainPagerAdapter(this);
 
+        // View Pager (Tabs) holen
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        // Tab Layout holen
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        // ViewPager im TabLayout anzeigen
-        tabLayout.setupWithViewPager(viewPager);
+
+        setPagerAdapter(pagerAdapter);
 
         // FCM Token holen lassen
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new FCMTokenTaskCompleteListener());
-
     }
 
     public FixedTabsPagerAdapter getPagerAdapter() {
@@ -58,7 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void setPagerAdapter(FixedTabsPagerAdapter pagerAdapter) {
         this.pagerAdapter = pagerAdapter;
+        // Ausgewählten PagerAdapter im ViewPager setzen
         viewPager.setAdapter(this.pagerAdapter);
+        // ViewPager im TabLayout anzeigen
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void refreshPagerAdapter() {
+        setPagerAdapter(getPagerAdapter());
     }
 }

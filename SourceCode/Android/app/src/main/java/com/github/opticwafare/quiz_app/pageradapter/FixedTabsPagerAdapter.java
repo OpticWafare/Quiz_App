@@ -89,6 +89,10 @@ public abstract class FixedTabsPagerAdapter extends PagerAdapter {
         }*/
     }
 
+    public void setTabAt(SuperTab tab, int position) {
+        tabs.set(position, tab);
+    }
+
     @Override
     public void destroyItem(ViewGroup collection, int position, Object view) {
         collection.removeView((View) view);

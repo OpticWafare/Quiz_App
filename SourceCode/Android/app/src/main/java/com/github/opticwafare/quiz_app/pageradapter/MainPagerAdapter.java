@@ -1,6 +1,8 @@
 package com.github.opticwafare.quiz_app.pageradapter;
 
 import com.github.opticwafare.quiz_app.MainActivity;
+import com.github.opticwafare.quiz_app.tabs.CreateQuizTab;
+import com.github.opticwafare.quiz_app.tabs.QuizzeTab;
 import com.github.opticwafare.quiz_app.tabs.SettingsTab;
 
 public class MainPagerAdapter extends FixedTabsPagerAdapter {
@@ -12,8 +14,8 @@ public class MainPagerAdapter extends FixedTabsPagerAdapter {
     @Override
     protected void init() {
         // Tabs hinzufügen
-        //addTab(new NotificationTab());
-        addTab(new SettingsTab());
-        //addTab(new ContactsTab());
+        addTab(new QuizzeTab());
+        addTab(new CreateQuizTab());
+        addTab(new SettingsTab(true));
     }
 }

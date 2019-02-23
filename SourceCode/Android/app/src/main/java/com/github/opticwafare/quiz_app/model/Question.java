@@ -14,6 +14,12 @@ public class Question {
 
     }
 
+    public Question(int questionid, String text, List<Answer> answers) {
+        this.questionid = questionid;
+        this.text = text;
+        this.answers = answers;
+    }
+
     public int getQuestionid() {
         return questionid;
     }

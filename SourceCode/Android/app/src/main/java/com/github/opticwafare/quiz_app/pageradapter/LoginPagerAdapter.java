@@ -17,7 +17,6 @@ public class LoginPagerAdapter extends FixedTabsPagerAdapter {
 
         addTab(new LoginTab());
         addTab(new RegisterTab());
-        addTab(new InsertQuestionsTab());
-        //addTab(new SettingsTab());
+        addTab(new SettingsTab(false));
     }
 }
