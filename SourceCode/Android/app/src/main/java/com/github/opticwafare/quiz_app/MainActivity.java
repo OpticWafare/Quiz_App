@@ -7,17 +7,23 @@ import android.support.v7.app.AppCompatActivity;
 import com.github.opticwafare.quiz_app.R;
 
 import com.github.opticwafare.quiz_app.listener.FCMTokenTaskCompleteListener;
+import com.github.opticwafare.quiz_app.model.Quiz;
 import com.github.opticwafare.quiz_app.model.User;
 import com.github.opticwafare.quiz_app.pageradapter.FixedTabsPagerAdapter;
 import com.github.opticwafare.quiz_app.pageradapter.LoginPagerAdapter;
 import com.github.opticwafare.quiz_app.pageradapter.MainPagerAdapter;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private FixedTabsPagerAdapter pagerAdapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    private List<Quiz> quizzesForLoggedInUser = new ArrayList<Quiz>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,5 +71,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void refreshPagerAdapter() {
         setPagerAdapter(getPagerAdapter());
+    }
+
+    public List<Quiz> getQuizzesForLoggedInUser() {
+        return quizzesForLoggedInUser;
+    }
+
+    public void setQuizzesForLoggedInUser(List<Quiz> quizzesForLoggedInUser) {
+        this.quizzesForLoggedInUser = quizzesForLoggedInUser;
+
+        if(getPagerAdapter() instanceof MainPagerAdapter) {
+            MainPagerAdapter mainPagerAdapter = (MainPagerAdapter) getPagerAdapter();
+            mainPagerAdapter.getQuizzeTab().showQuizze(quizzesForLoggedInUser);
+        }
     }
 }

@@ -25,17 +25,21 @@ public class QuizzeTab extends SuperTab {
 
     @Override
     public void init(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
 
-        List<Quiz> quizze = new ArrayList<Quiz>();
+    public void showQuizze(List<Quiz> quizze) {
+
+        //List<Quiz> quizze = new ArrayList<Quiz>();
 
         // Test Code Beginn
-        Date dateJetzt = Calendar.getInstance().getTime();
+        /*Date dateJetzt = Calendar.getInstance().getTime();
         Timestamp timestampJetzt = new Timestamp(dateJetzt.getTime());
 
         Quiz testQuiz = new Quiz(null, "Test Quiz", timestampJetzt, timestampJetzt,
                 new ArrayList<Question>(), new ArrayList<QuizForUser>());
 
-        quizze.add(testQuiz);
+        quizze.add(testQuiz);*/
         // Test Code Ende
 
         LinearLayout linearLayout = (LinearLayout) mainActivity.findViewById(R.id.linearlayout_quizze);

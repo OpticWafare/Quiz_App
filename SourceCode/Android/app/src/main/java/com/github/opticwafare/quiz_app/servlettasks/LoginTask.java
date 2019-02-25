@@ -48,6 +48,8 @@ public class LoginTask extends SendToServletTask {
             loginTab.getEditTextPassword().clearFocus();
 
             loginTab.getMainActivity().setPagerAdapter(new MainPagerAdapter(loginTab.getMainActivity()));
+            GetQuizzesForUserTask getQuizzesForUserTask = new GetQuizzesForUserTask(loginTab.getMainActivity());
+            getQuizzesForUserTask.execute("");
         }
     }
 }

@@ -55,6 +55,8 @@ public class RegisterTask extends SendToServletTask {
             registerTab.getEditTextUsername().clearFocus();
 
             registerTab.getMainActivity().setPagerAdapter(new MainPagerAdapter(registerTab.getMainActivity()));
+            GetQuizzesForUserTask getQuizzesForUserTask = new GetQuizzesForUserTask(registerTab.getMainActivity());
+            getQuizzesForUserTask.execute("");
         }
     }
 }
