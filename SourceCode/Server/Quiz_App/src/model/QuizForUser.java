@@ -4,20 +4,25 @@ import java.sql.Timestamp;
 
 import javax.persistence.*;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "quizforuser")
 @IdClass(QuizForUserId.class)
 public class QuizForUser {
 
 	@Id
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userid")
+	@Expose(serialize = true, deserialize = true)
 	private User user;
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "quizid")
+	@Expose(serialize = false, deserialize = true)
 	private Quiz quiz;
 	@Column(name  = "answeredtime", nullable = true, unique = false)
+	@Expose(serialize = true, deserialize = true)
 	private Timestamp answeredtime;
 	
 	

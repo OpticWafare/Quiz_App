@@ -5,19 +5,25 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "question")
 public class Question {
 
 	@Id
 	@GeneratedValue
+	@Expose(serialize = true, deserialize = true)
 	private int questionid;
 	@Column(name = "text", nullable = false, unique = false)
+	@Expose(serialize = true, deserialize = true)
 	private String text;
 	@ManyToOne
 	@JoinColumn(name = "quizid", nullable = false)
+	@Expose(serialize = false, deserialize = true)
 	private Quiz quiz;
-	@OneToMany(mappedBy = "question")
+	@OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@Expose(serialize = true, deserialize = true)
 	private List<Answer> answers = new ArrayList<Answer>();
 	
 	public Question() {

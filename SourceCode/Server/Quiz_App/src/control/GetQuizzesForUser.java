@@ -1,8 +1,8 @@
 package control;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,21 +14,21 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import model.DBManager;
-import model.LoginTransfer;
+import model.Quiz;
 import model.TimestampLongFormatTypeAdapter;
 import model.User;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class GetQuizzesForUser
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/GetQuizzesForUser")
+public class GetQuizzesForUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public GetQuizzesForUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,7 +37,6 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		doPost(request, response);
 	}
 
@@ -45,37 +44,21 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String userCredential = request.getParameter("userCredential");
-		String password = request.getParameter("password");
-		System.out.println("=== LOGIN ===");
-		System.out.println("UserCredential: "+ userCredential);
-		System.out.println("Password: "+password);
 		
-		DBManager db = DBManager.getInstance();
+		System.out.println("=== Get Quizzes for User ===");
+		int userid = Integer.parseInt(request.getParameter("userid"));
+		DBManager dbmanager = DBManager.getInstance();
+		User user = dbmanager.getUserByUserid(userid);
 		
-		User user = null;
-		user = db.loginUserEmail(userCredential, password);
-		if(user == null)
-		{
-			user = db.loginUserUsername(userCredential, password);
-		}
+		List<Quiz> quizze = dbmanager.getQuizzesForUser(user);
 		
-		LoginTransfer loginTransfer = null;
-		if(user != null) {
-
-			loginTransfer = new LoginTransfer(user);
-		}
-		else {
-			
-			loginTransfer = new LoginTransfer("E-Mail bzw. Username oder Passwort sind nicht korrekt");
-		}
 		Gson gson = new GsonBuilder()
 				.excludeFieldsWithoutExposeAnnotation()
 				.registerTypeAdapter(Timestamp.class, new TimestampLongFormatTypeAdapter())
 				.create();
-		String json = gson.toJson(loginTransfer);
-		System.out.println("Login user json: " + json);
+		String json = gson.toJson(quizze);
+		
+		System.out.println("JSON: "+json);
 		response.getWriter().append(json);
 	}
 

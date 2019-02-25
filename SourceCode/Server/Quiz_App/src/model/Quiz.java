@@ -6,25 +6,34 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "quiz")
 public class Quiz {
 
 	@Id
 	@GeneratedValue
+	@Expose(serialize = true, deserialize = true)
 	private int quizid;
 	@ManyToOne
 	@JoinColumn(name = "creator", nullable = false)
+	@Expose(serialize = true, deserialize = true)
 	private User creator;
 	@Column(name = "name", nullable = false, unique = false)
+	@Expose(serialize = true, deserialize = true)
 	private String name;
 	@Column(name = "creationtime", nullable = false, unique = false)
+	@Expose(serialize = true, deserialize = true)
 	private Timestamp creationtime;
 	@Column(name = "publishtime", nullable = false, unique = false)
+	@Expose(serialize = true, deserialize = true)
 	private Timestamp publishtime;
-	@OneToMany(mappedBy = "quiz")
+	@OneToMany(mappedBy = "quiz", cascade = CascadeType.PERSIST)
+	@Expose(serialize = true, deserialize = true)
 	private List<Question> questions =  new ArrayList<Question>();
-	@OneToMany(mappedBy = "quiz")
+	@OneToMany(mappedBy = "quiz", cascade = CascadeType.PERSIST)
+	@Expose(serialize = true, deserialize = true)
 	private List<QuizForUser> participatingUsers = new ArrayList<QuizForUser>();
 	
 	public Quiz(User creator, String name, Timestamp creationtime, Timestamp publishtime) {

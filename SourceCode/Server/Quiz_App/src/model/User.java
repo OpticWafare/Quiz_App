@@ -5,26 +5,36 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "user")
 public class User {
 
 	@Id
 	@GeneratedValue
+	@Expose(serialize = true, deserialize = true)
 	private int userid;
 	@Column(name = "username", nullable = false, unique = true)
+	@Expose(serialize = true, deserialize = true)
 	private String username;
 	@Column(name = "password", nullable = false, unique = false)
+	@Expose(serialize = false, deserialize = true)
 	private String password;
 	@Column(name = "email", nullable = false, unique = true)
+	@Expose(serialize = true, deserialize = true)
 	private String email;
 	@Column(name = "fcmtoken", nullable = false, unique = true)
+	@Expose(serialize = true, deserialize = true)
 	private String fcmtoken;
 	@OneToMany(mappedBy = "creator")
+	@Expose(serialize = false, deserialize = true)
 	private List<Quiz> createdQuizzes = new ArrayList<Quiz>();
-	@ManyToMany(mappedBy = "chosenByUsers")
+	@ManyToMany(mappedBy = "chosenByUsers", fetch = FetchType.LAZY)
+	@Expose(serialize = true, deserialize = true)
 	private List<Answer> chosenAnswers = new ArrayList<Answer>();
 	@OneToMany(mappedBy = "user")
+	@Expose(serialize = false, deserialize = true)
 	private List<QuizForUser> participatedQuizzes = new ArrayList<QuizForUser>();
 	
 	public User(String username, String password, String email, String fcmtoken) {

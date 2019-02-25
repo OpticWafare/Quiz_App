@@ -1,5 +1,7 @@
 package model;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Ein Objekt aus dieser Klasse wird nach dem Login/Registrieren eines Nutzers an das Endgerät gesendet
  * 
@@ -11,7 +13,9 @@ package model;
  */
 public class LoginTransfer {
 
+	@Expose(serialize = true, deserialize = true)
 	private String error;
+	@Expose(serialize = true, deserialize = true)
 	private User user;
 		
 	public LoginTransfer(User user) {
