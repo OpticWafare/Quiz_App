@@ -160,6 +160,31 @@ private static DBManager instance;
 		em.persist(quiz);
 		em.getTransaction().commit();
 	}
+	
+	public List<User> getAllUsersExceptCreator (User user)
+	{
+		EntityManager em = getEntityManager();
+		TypedQuery<User> typedQuery = em.createQuery("from User u where u <> :user", User.class);
+		typedQuery.setParameter("user", user);
+		List<User> allUsersExceptCreator = typedQuery.getResultList();
+		return allUsersExceptCreator;
+	}
+	
+	public void addParticipatingUsersToQuiz (List<User> users, Quiz quiz)
+	{
+		EntityManager em = getEntityManager();
+		em.getTransaction().begin();
+		
+		for(int i = 0; i < users.size(); i++) {
+			User user = users.get(i);
+			
+			QuizForUser quizForUser = new QuizForUser(user, quiz, null);
+			user.addParticipatedQuiz(quizForUser);
+			quiz.addParticipatingUser(quizForUser);
+		}
+		
+		em.getTransaction().commit();
+	}
 
 	
 	public static void main(String[] args) {

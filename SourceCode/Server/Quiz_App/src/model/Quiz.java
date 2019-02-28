@@ -95,5 +95,8 @@ public class Quiz {
 		this.participatingUsers = participatingUsers;
 	}
 	
+	public void addParticipatingUser(QuizForUser quizForUser) {
+		this.participatingUsers.add(quizForUser);
+	}
 	
 }

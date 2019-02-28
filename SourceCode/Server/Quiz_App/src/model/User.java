@@ -89,6 +89,10 @@ public class User {
 	public void setCreatedQuizzes(List<Quiz> createdQuizzes) {
 		this.createdQuizzes = createdQuizzes;
 	}
+	
+	public void addCreatedQuiz(Quiz quiz) {
+		this.createdQuizzes.add(quiz);
+	}
 
 
 	public List<Answer> getChosenAnswers() {
@@ -108,6 +112,10 @@ public class User {
 
 	public void setParticipatedQuizzes(List<QuizForUser> participatedQuizzes) {
 		this.participatedQuizzes = participatedQuizzes;
+	}
+	
+	public void addParticipatedQuiz(QuizForUser quizForUser) {
+		participatedQuizzes.add(quizForUser);
 	}
 
 	
