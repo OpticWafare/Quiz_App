@@ -28,7 +28,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:text="Tippe deine Fragen ein!"
-                android:textColor="?android:attr/navigationBarColor"
+                android:textColor="#555"
                 android:textSize="24sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

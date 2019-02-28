@@ -34,6 +34,9 @@ public class Quiz {
         this.participatingUsers = participatingUsers;
     }
 
+    public Quiz() {
+    }
+
     public int getNumberOfCompletedUsers() {
         int counter = 0;
         for(int i = 0; i < participatingUsers.size(); i++) {

@@ -26,6 +26,11 @@ public class QuizzeTab extends SuperTab {
     @Override
     public void init(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+
+        List<Quiz> quizze = mainActivity.getQuizzesForLoggedInUser();
+        if(quizze != null) {
+            showQuizze(quizze);
+        }
     }
 
     public void showQuizze(List<Quiz> quizze) {
@@ -46,6 +51,14 @@ public class QuizzeTab extends SuperTab {
 
         // LayoutInflater erstellen. Wird verwendet um ein XML-Dokument in eine lauffähige GUI zu verwandeln
         LayoutInflater inflater = LayoutInflater.from(mainActivity);
+
+        int numberViews = linearLayout.getChildCount();
+        if(numberViews > 1) {
+
+            for(int i = 1; i < numberViews; i++) {
+                linearLayout.removeViewAt(i);
+            }
+        }
 
         for(int i = 0; i < quizze.size(); i++) {
 

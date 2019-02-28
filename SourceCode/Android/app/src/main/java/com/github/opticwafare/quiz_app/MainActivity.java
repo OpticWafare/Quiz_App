@@ -70,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshPagerAdapter() {
+        int currentTabNumber = viewPager.getCurrentItem();
         setPagerAdapter(getPagerAdapter());
+        viewPager.setCurrentItem(currentTabNumber);
     }
 
     public List<Quiz> getQuizzesForLoggedInUser() {
