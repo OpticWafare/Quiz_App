@@ -25,6 +25,8 @@ public class QuestionElement extends UIElement {
      */
     private ViewGroup layout = null;
 
+    private Question question;
+
     public QuestionElement() {
         super(R.layout.element_question);
     }
@@ -99,6 +101,7 @@ public class QuestionElement extends UIElement {
      */
     public ViewGroup show_created(LayoutInflater layoutInflater, ViewGroup container, Question question, int number) {
 
+        this.question = question;
         ViewGroup layout = super.show(layoutInflater, container);
 
         TextView textViewNumber = (TextView) layout.findViewById(R.id.textView_question_number);
@@ -234,5 +237,35 @@ public class QuestionElement extends UIElement {
 
             return question;
         }
+    }
+
+    public List<Integer> getChosenAnswerIds() {
+
+        CheckBox checkBox1 = (CheckBox) layout.findViewById(R.id.checkBox_question_answer_1);
+        CheckBox checkBox2 = (CheckBox) layout.findViewById(R.id.checkBox_question_answer_2);
+        CheckBox checkBox3 = (CheckBox) layout.findViewById(R.id.checkBox_question_answer_3);
+        CheckBox checkBox4 = (CheckBox) layout.findViewById(R.id.checkBox_question_answer_4);
+
+        List<Answer> answers = question.getAnswers();
+        ArrayList<Integer> chosenAnswerIds = new ArrayList<Integer>();
+
+        if(checkBox1.isChecked()) {
+            int answerId = answers.get(0).getAnswerid();
+            chosenAnswerIds.add(answerId);
+        }
+        if(checkBox2.isChecked()) {
+            int answerId = answers.get(1).getAnswerid();
+            chosenAnswerIds.add(answerId);
+        }
+        if(checkBox3.isChecked()) {
+            int answerId = answers.get(2).getAnswerid();
+            chosenAnswerIds.add(answerId);
+        }
+        if(checkBox4.isChecked()) {
+            int answerId = answers.get(3).getAnswerid();
+            chosenAnswerIds.add(answerId);
+        }
+
+        return chosenAnswerIds;
     }
 }

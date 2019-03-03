@@ -12,12 +12,23 @@ public class TimestampLongFormatTypeAdapter extends TypeAdapter<Timestamp> {
 
     @Override
     public void write(JsonWriter out, Timestamp value) throws IOException {
-        out.value(value.getTime());
+        if(value == null) {
+            out.value(-1);
+        }
+        else {
+            out.value(value.getTime());
+        }
     }
 
     @Override
     public Timestamp read(JsonReader in) throws IOException {
-        return new Timestamp(in.nextLong());
+        long value = in.nextLong();
+        if(value < 0) {
+            return null;
+        }
+        else {
+            return new Timestamp(value);
+        }
     }
 
 }

@@ -1,5 +1,8 @@
 package com.github.opticwafare.quiz_app.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
     private int userid;
@@ -8,6 +11,9 @@ public class User {
     private String email;
     private String fcmtoken;
 
+    private List<Quiz> createdQuizzes = new ArrayList<Quiz>();
+    private List<Answer> chosenAnswers = new ArrayList<Answer>();
+    private List<QuizForUser> participatedQuizzes = new ArrayList<QuizForUser>();
     /**
      * Der derzeit eingeloggte User
      */
@@ -24,6 +30,28 @@ public class User {
         this.password = password;
         this.email = email;
         this.fcmtoken = fcmtoken;
+    }
+
+    public boolean isQuizCreator(Quiz quiz) {
+
+        for(int i = 0; i < createdQuizzes.size(); i++) {
+            if(createdQuizzes.get(i).getQuizid() == quiz.getQuizid()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasQuizParticipated(Quiz quiz) {
+
+        for(int i = 0; i < participatedQuizzes.size(); i++) {
+            if(participatedQuizzes.get(i).getQuiz().getQuizid() == quiz.getQuizid()) {
+                if(participatedQuizzes.get(i).getAnsweredtime() != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public int getUserid() {
@@ -75,5 +103,29 @@ public class User {
 
     public static void setLonelyFcmToken(String lonelyFcmToken) {
         User.lonelyFcmToken = lonelyFcmToken;
+    }
+
+    public List<Quiz> getCreatedQuizzes() {
+        return createdQuizzes;
+    }
+
+    public void setCreatedQuizzes(List<Quiz> createdQuizzes) {
+        this.createdQuizzes = createdQuizzes;
+    }
+
+    public List<Answer> getChosenAnswers() {
+        return chosenAnswers;
+    }
+
+    public void setChosenAnswers(List<Answer> chosenAnswers) {
+        this.chosenAnswers = chosenAnswers;
+    }
+
+    public List<QuizForUser> getParticipatedQuizzes() {
+        return participatedQuizzes;
+    }
+
+    public void setParticipatedQuizzes(List<QuizForUser> participatedQuizzes) {
+        this.participatedQuizzes = participatedQuizzes;
     }
 }
