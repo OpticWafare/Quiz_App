@@ -73,5 +73,7 @@ public class Answer {
 		this.correct = correct;
 	}
 	
-	
+	public void addChosenByUser(User user) {
+		this.chosenByUsers.add(user);
+	}
 }

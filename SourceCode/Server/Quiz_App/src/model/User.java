@@ -104,6 +104,9 @@ public class User {
 		this.chosenAnswers = chosenAnswers;
 	}
 
+	public void addChosenAnswer(Answer answer) {
+		this.chosenAnswers.add(answer);
+	}
 
 	public List<QuizForUser> getParticipatedQuizzes() {
 		return participatedQuizzes;

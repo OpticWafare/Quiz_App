@@ -91,6 +91,23 @@ private static DBManager instance;
 		}
 	}
 	
+	public void insertAnsweredQuestions (int userid, List<Integer> answerids)
+	{
+	    User user = getUserByUserid(userid);
+	   
+	    EntityManager em = getEntityManager();
+	    em.getTransaction().begin();
+	    
+	    for(int i = 0; i < answerids.size(); i++)
+	    {
+	    	Answer answer = getAnswerById(answerids.get(i));
+	    	user.addChosenAnswer(answer);
+	    	answer.addChosenByUser(user);
+	    }
+	    
+	    em.getTransaction().commit();
+	}
+	
 	public User getUserByEmail(String email)
 	{
 		EntityManager em = getEntityManager();
@@ -139,6 +156,79 @@ private static DBManager instance;
 			return user;
 		}
 		catch(NoResultException e)
+		{
+			return null;
+		}
+	}
+	
+	public Quiz getQuizById (int quizid)
+	{
+		EntityManager em = getEntityManager();
+		TypedQuery<Quiz> typedQuery = em.createQuery("from Quiz q where q.quizid = :quizid", Quiz.class);
+		typedQuery.setParameter("quizid", quizid);
+		try {
+			Quiz quiz = typedQuery.getSingleResult();
+			return quiz;
+		}
+		catch (NoResultException e)
+		{
+			return null;
+		}
+	}
+	
+	public Answer getAnswerById (int answerid)
+	{
+		EntityManager em = getEntityManager();
+		TypedQuery<Answer> typedQuery = em.createQuery("from Answer a where a.answerid = :answerid", Answer.class);
+		typedQuery.setParameter("answerid", answerid);
+		try {
+			Answer answer = typedQuery.getSingleResult();
+			return answer;
+		}
+		catch (NoResultException e)
+		{
+			return null;
+		}
+	}
+	
+	public Quiz getQuizFromAnswerId (int answerid)
+	{
+		EntityManager em = getEntityManager();
+		TypedQuery<Quiz> typedQuery = em.createQuery("from Quiz qu Join Question q on(q.quiz = qu) Join Answer a on(q = a.question) where a.answerid = :answerid", Quiz.class);
+		typedQuery.setParameter("answerid", answerid);
+		try {
+			Quiz quiz = typedQuery.getSingleResult();
+			return quiz;
+		}
+		catch (NoResultException e)
+		{
+			return null;
+		}
+	}
+	
+	public void setQuizAnsweredTime (User user, Quiz quiz, Timestamp answeredtime)
+	{
+		QuizForUser quizForUser = getQuizForUser(user, quiz);
+		
+		EntityManager em = getEntityManager();
+		em.getTransaction().begin();
+		
+		quizForUser.setAnsweredtime(answeredtime);
+		
+		em.getTransaction().commit();
+	}
+	
+	public QuizForUser getQuizForUser (User user, Quiz quiz)
+	{
+		EntityManager em = getEntityManager();
+		TypedQuery<QuizForUser> typedQuery = em.createQuery("from QuizForUser where user = :user and quiz = :quiz", QuizForUser.class);
+		typedQuery.setParameter("user", user);
+		typedQuery.setParameter("quiz", quiz);
+		try {
+			QuizForUser quizForUser = typedQuery.getSingleResult();
+			return quizForUser;
+		}
+		catch (NoResultException e)
 		{
 			return null;
 		}

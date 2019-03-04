@@ -17,7 +17,7 @@ public class QuizForUser {
 	@Expose(serialize = true, deserialize = true)
 	private User user;
 	@Id
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "quizid")
 	@Expose(serialize = false, deserialize = true)
 	private Quiz quiz;

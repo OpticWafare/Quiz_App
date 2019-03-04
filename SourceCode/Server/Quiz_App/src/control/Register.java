@@ -1,6 +1,9 @@
 package control;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,9 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import model.DBManager;
 import model.LoginTransfer;
+import model.LoginTransferTypeAdapter;
+import model.Quiz;
+import model.QuizToQuizIdTypeAdapter;
+import model.TimestampLongFormatTypeAdapter;
 import model.User;
 
 /**
@@ -104,7 +112,11 @@ public class Register extends HttpServlet {
 			LoginTransfer loginTransfer = new LoginTransfer(user2);
 
 			// Daten in JSON umwandeln
-			Gson gson = new Gson();
+			Gson gson = new GsonBuilder()
+					.excludeFieldsWithoutExposeAnnotation()
+					.registerTypeAdapter(Timestamp.class, new TimestampLongFormatTypeAdapter())
+					.registerTypeAdapter(LoginTransfer.class, new LoginTransferTypeAdapter())
+					.create();
 			String json = gson.toJson(loginTransfer);
 			// Senden
 			response.getWriter().append(json);
