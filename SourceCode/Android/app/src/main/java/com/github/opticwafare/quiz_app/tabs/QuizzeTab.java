@@ -56,7 +56,12 @@ public class QuizzeTab extends SuperTab {
         if(numberViews > 1) {
 
             for(int i = 1; i < numberViews; i++) {
-                linearLayout.removeViewAt(i);
+                try {
+                    linearLayout.removeViewAt(i);
+                }
+                catch (NullPointerException e) {
+                    System.out.println("QuizzeTab - Quizze entfernen: View nr " + i + " war null");
+                }
             }
         }
 

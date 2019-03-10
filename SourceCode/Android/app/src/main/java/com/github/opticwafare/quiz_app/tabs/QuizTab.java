@@ -9,10 +9,12 @@ import com.github.opticwafare.quiz_app.MainActivity;
 import com.github.opticwafare.quiz_app.R;
 import com.github.opticwafare.quiz_app.elements.QuestionElement;
 import com.github.opticwafare.quiz_app.elements.RankUserElement;
+import com.github.opticwafare.quiz_app.listener.QuizLoadedListener;
 import com.github.opticwafare.quiz_app.model.Answer;
 import com.github.opticwafare.quiz_app.model.Question;
 import com.github.opticwafare.quiz_app.model.Quiz;
 import com.github.opticwafare.quiz_app.model.RankUser;
+import com.github.opticwafare.quiz_app.servlettasks.GetQuizTask;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -23,9 +25,16 @@ import java.util.List;
 /**
  * Zeigt die Daten eines einzigen Quizzes an
  */
-public class QuizTab extends SuperTab {
+public class QuizTab extends SuperTab implements QuizLoadedListener {
 
     private Quiz quiz;
+
+    private LayoutInflater inflater;
+
+    private TextView textViewName;
+    private LinearLayout linearLayoutWrapper;
+    private LinearLayout linearLayoutUsers;
+    private LinearLayout linearLayoutQuestions;
 
     public QuizTab(Quiz quiz) {
         super("Quizze", R.layout.activity_quiz);
@@ -36,12 +45,21 @@ public class QuizTab extends SuperTab {
     public void init(MainActivity mainActivity) {
 
         // LayoutInflater erstellen. Wird verwendet um ein XML-Dokument in eine lauffähige GUI zu verwandeln
-        LayoutInflater inflater = LayoutInflater.from(mainActivity);
+        inflater = LayoutInflater.from(mainActivity);
 
-        TextView textViewName = (TextView) mainActivity.findViewById(R.id.textView_quiz_name);
-        LinearLayout linearLayoutWrapper = (LinearLayout) mainActivity.findViewById(R.id.linearlayout_quiz);
-        LinearLayout linearLayoutUsers = (LinearLayout) mainActivity.findViewById(R.id.linearlayout_quiz_users);
-        LinearLayout linearLayoutQuestions = (LinearLayout) mainActivity.findViewById(R.id.linearlayout_quiz_questions);
+        textViewName = (TextView) mainActivity.findViewById(R.id.textView_quiz_name);
+        linearLayoutWrapper = (LinearLayout) mainActivity.findViewById(R.id.linearlayout_quiz);
+        linearLayoutUsers = (LinearLayout) mainActivity.findViewById(R.id.linearlayout_quiz_users);
+        linearLayoutQuestions = (LinearLayout) mainActivity.findViewById(R.id.linearlayout_quiz_questions);
+
+        textViewName.setText(quiz.getName() + " (Laden...)");
+
+        GetQuizTask getQuizTask = new GetQuizTask(quiz.getQuizid());
+        getQuizTask.setQuizLoadedListener(this);
+        getQuizTask.execute("");
+    }
+
+    public void showData() {
 
         textViewName.setText(quiz.getName());
 
@@ -63,7 +81,7 @@ public class QuizTab extends SuperTab {
         answers1.add(new Answer("Antwort 2", false));
         answers1.add(new Answer("Antwort 3", true));
         answers1.add(new Answer("Antwort 4", false));
-        System.out.println("QuizZTab: liste answers1 hat "+answers1.size()+" antworten");
+        System.out.println("QuizZTab: liste answers1 hat " + answers1.size() + " antworten");
 
         List<Answer> answers2 = new ArrayList<>();
         answers2.add(new Answer("Antwort A", false));
@@ -79,7 +97,7 @@ public class QuizTab extends SuperTab {
 
         // Test Code Ende
 
-        for(int i = 0; i < rankUsers.size(); i++) {
+        for (int i = 0; i < rankUsers.size(); i++) {
 
             RankUserElement rankUserElement = new RankUserElement();
             ViewGroup rankUserView = rankUserElement.show(inflater, linearLayoutUsers, rankUsers.get(i), maxNumberPoints);
@@ -87,17 +105,23 @@ public class QuizTab extends SuperTab {
         }
 
         System.out.println("QuizTab: Zeige Fragen an");
-        for(int i = 0; i < questions.size(); i++) {
+        for (int i = 0; i < questions.size(); i++) {
 
-            System.out.println(i+". Frage: " + questions.get(i).getText());
+            System.out.println(i + ". Frage: " + questions.get(i).getText());
             System.out.println("Anzahl Antworten: " + questions.get(i).getAnswers().size());
             QuestionElement questionElement = new QuestionElement();
-            ViewGroup questionElementView = questionElement.show_created(inflater, linearLayoutQuestions, questions.get(i), (i+1));
+            ViewGroup questionElementView = questionElement.show_created(inflater, linearLayoutQuestions, questions.get(i), (i + 1));
             linearLayoutQuestions.addView(questionElementView);
         }
     }
 
     public Quiz getQuiz() {
         return quiz;
+    }
+
+    @Override
+    public void onQuizLoaded(Quiz quiz) {
+        this.quiz = quiz;
+        showData();
     }
 }

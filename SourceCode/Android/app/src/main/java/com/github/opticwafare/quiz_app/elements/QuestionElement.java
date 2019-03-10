@@ -60,6 +60,8 @@ public class QuestionElement extends UIElement {
      */
     public ViewGroup show_participate(LayoutInflater layoutInflater, ViewGroup container, Question question, int number) {
 
+        this.question = question;
+
         ViewGroup layout = super.show(layoutInflater, container);
 
         TextView textViewNumber = (TextView) layout.findViewById(R.id.textView_question_number);
