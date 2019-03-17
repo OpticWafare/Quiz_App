@@ -13,7 +13,9 @@ import com.github.opticwafare.quiz_app.listener.QuizLoadedListener;
 import com.github.opticwafare.quiz_app.model.Answer;
 import com.github.opticwafare.quiz_app.model.Question;
 import com.github.opticwafare.quiz_app.model.Quiz;
+import com.github.opticwafare.quiz_app.model.QuizForUser;
 import com.github.opticwafare.quiz_app.model.RankUser;
+import com.github.opticwafare.quiz_app.model.User;
 import com.github.opticwafare.quiz_app.servlettasks.GetQuizTask;
 
 import java.sql.Timestamp;
@@ -63,18 +65,21 @@ public class QuizTab extends SuperTab implements QuizLoadedListener {
 
         textViewName.setText(quiz.getName());
 
-        Date dateJetzt = Calendar.getInstance().getTime();
-        Timestamp timestampJetzt = new Timestamp(dateJetzt.getTime());
+        List<RankUser> rankUsers = quiz.getRankUsers();
 
-        List<RankUser> rankUsers = new ArrayList<RankUser>();
-        rankUsers.add(new RankUser(1, "Test User 1", "test1@email.com", 10, timestampJetzt));
-        rankUsers.add(new RankUser(-1, "Test User 2", "tes2t@email.com", 0, null));
+        // Test Code für RankUsers:
+        //Date dateJetzt = Calendar.getInstance().getTime();
+        //Timestamp timestampJetzt = new Timestamp(dateJetzt.getTime());
+        //List<RankUser> rankUsers = new ArrayList<RankUser>();
+        //rankUsers.add(new RankUser(1, "Test User 1", "test1@email.com", 10, timestampJetzt));
+        //rankUsers.add(new RankUser(-1, "Test User 2", "tes2t@email.com", 0, null));
 
-        int maxNumberPoints = 10;
+        int maxNumberPoints = quiz.getMaxNumberOfPoints();
 
-        //List<Question> questions = quiz.getQuestions();
+        List<Question> questions = quiz.getQuestions();
+
         // Test Code Beginn
-        List<Question> questions = new ArrayList<Question>();
+        /*List<Question> questions = new ArrayList<Question>();
 
         List<Answer> answers1 = new ArrayList<>();
         answers1.add(new Answer("Antwort 1", false));
@@ -93,15 +98,41 @@ public class QuizTab extends SuperTab implements QuizLoadedListener {
         Question question2 = new Question(1, "Fragetext der 2ten Frage", answers2);
 
         questions.add(question1);
-        questions.add(question2);
+        questions.add(question2);*/
 
         // Test Code Ende
 
+        System.out.println("QuizTab: Zeige RankUsers an");
         for (int i = 0; i < rankUsers.size(); i++) {
 
             RankUserElement rankUserElement = new RankUserElement();
             ViewGroup rankUserView = rankUserElement.show(inflater, linearLayoutUsers, rankUsers.get(i), maxNumberPoints);
             linearLayoutUsers.addView(rankUserView);
+        }
+
+        boolean isUserTheQuizCreator;
+        if(User.getLoggedInUser().isQuizCreator(quiz)) {
+            isUserTheQuizCreator = true;
+        }
+        else {
+            isUserTheQuizCreator = false;
+        }
+
+        // Gewählte Fragen des eingeloggten Users holen
+        int loggedInUserUserid = User.getLoggedInUser().getUserid();
+        List<QuizForUser> participatingUsers = quiz.getParticipatingUsers();
+        List<Answer> loggedInUserChosenAnswers = null;
+        System.out.println("Searching for chosen answers of logged-in user");
+        for(int i = 0; i < participatingUsers.size(); i++) {
+            User u = participatingUsers.get(i).getUser();
+            if(u.getUserid() == loggedInUserUserid) {
+                loggedInUserChosenAnswers = u.getChosenAnswers();
+                System.out.println("\tFound chosen answers of logged-in user! " + loggedInUserChosenAnswers.size());
+                break;
+            }
+        }
+        if(loggedInUserChosenAnswers == null) {
+            loggedInUserChosenAnswers = new ArrayList<Answer>();
         }
 
         System.out.println("QuizTab: Zeige Fragen an");
@@ -110,7 +141,15 @@ public class QuizTab extends SuperTab implements QuizLoadedListener {
             System.out.println(i + ". Frage: " + questions.get(i).getText());
             System.out.println("Anzahl Antworten: " + questions.get(i).getAnswers().size());
             QuestionElement questionElement = new QuestionElement();
-            ViewGroup questionElementView = questionElement.show_created(inflater, linearLayoutQuestions, questions.get(i), (i + 1));
+
+            ViewGroup questionElementView;
+            if(isUserTheQuizCreator == true) {
+                questionElementView = questionElement.show_created(inflater, linearLayoutQuestions, questions.get(i), (i + 1));
+            }
+            else {
+                questionElementView = questionElement.show_participated(inflater, linearLayoutQuestions, questions.get(i), (i + 1), loggedInUserChosenAnswers);
+            }
+
             linearLayoutQuestions.addView(questionElementView);
         }
     }

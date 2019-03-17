@@ -3,11 +3,15 @@ package com.github.opticwafare.quiz_app.servlettasks;
 import android.widget.Toast;
 
 import com.github.opticwafare.quiz_app.model.LoginTransfer;
+import com.github.opticwafare.quiz_app.model.TimestampLongFormatTypeAdapter;
 import com.github.opticwafare.quiz_app.model.User;
 import com.github.opticwafare.quiz_app.pageradapter.MainPagerAdapter;
 import com.github.opticwafare.quiz_app.tabs.LoginTab;
 import com.github.opticwafare.quiz_app.tabs.LoginTab;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.sql.Timestamp;
 
 public class LoginTask extends SendToServletTask {
 
@@ -31,7 +35,9 @@ public class LoginTask extends SendToServletTask {
     @Override
     protected void onPostExecute(String s) {
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Timestamp.class, new TimestampLongFormatTypeAdapter())
+                .create();
         LoginTransfer loginTransfer = gson.fromJson(s, LoginTransfer.class);
 
         if(loginTransfer == null) {

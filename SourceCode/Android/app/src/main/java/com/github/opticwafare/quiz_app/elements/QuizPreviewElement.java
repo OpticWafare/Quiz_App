@@ -25,9 +25,17 @@ public class QuizPreviewElement extends UIElement {
         TextView textView3 = (TextView) layout.findViewById(R.id.textView_quizpreview_3);
 
         textViewName.setText(quiz.getName());
-        textView1.setText(quiz.getQuestions().size() + " Fragen");
+        String numberOfQuestionsText = quiz.getQuestions().size() + " Frage";
+        if(quiz.getQuestions().size() > 1) {
+            numberOfQuestionsText += "n";
+        }
+        textView1.setText(numberOfQuestionsText);
 
-        textView2.setText("Abgeschlossen: "+quiz.getNumberOfCompletedUsers()+" von "+quiz.getParticipatingUsers().size()+" TeilnehmerInnen");
+        String completedUsersText = "Abgeschlossen: "+quiz.getNumberOfCompletedUsers()+" von "+quiz.getParticipatingUsers().size()+" TeilnehmerIn";
+        if(quiz.getParticipatingUsers().size() > 1) {
+            completedUsersText += "nen";
+        }
+        textView2.setText(completedUsersText);
 
         textView3.setText("Erstellt am "+quiz.getCreationDateAsString()+" um "+quiz.getCreationTimeAsString()+" Uhr");
 

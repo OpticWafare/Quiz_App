@@ -19,6 +19,13 @@ public class RankUser {
         this.answeredTime = answeredTime;
     }
 
+    public RankUser(String username, String email, int pointsAchieved, Timestamp answeredTime) {
+        this.username = username;
+        this.email = email;
+        this.pointsAchieved = pointsAchieved;
+        this.answeredTime = answeredTime;
+    }
+
     public int getRank() {
         return rank;
     }
@@ -78,6 +85,15 @@ public class RankUser {
             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
             String stringTime = dateFormat.format(getAnsweredTimestamp());
             return stringTime;
+        }
+    }
+
+    public boolean hasAnsweredQuiz() {
+        if(getAnsweredTimestamp() == null) {
+            return false;
+        }
+        else {
+            return true;
         }
     }
 }

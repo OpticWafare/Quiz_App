@@ -8,4 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CheckboxTheme">
+        <!-- Customize your theme here. -->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <item name="colorAccent">#0000FF</item>
+        <item name="android:textColorSecondary">#00FF00</item>
+    </style>
+
+    <!--
+    <style name="ViewAnswerCheckboxTheme">
+        <item name="android:buttonTint">#000000</item>
+    </style>
+    -->
+
 </resources>

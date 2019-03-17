@@ -1,9 +1,8 @@
 package com.github.opticwafare.quiz_app.elements;
 
-import android.text.Editable;
-import android.text.SpannableStringBuilder;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,8 +11,7 @@ import android.widget.TextView;
 import com.github.opticwafare.quiz_app.R;
 import com.github.opticwafare.quiz_app.model.Answer;
 import com.github.opticwafare.quiz_app.model.Question;
-
-import org.w3c.dom.Text;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +113,8 @@ public class QuestionElement extends UIElement {
         CheckBox checkBox3 = (CheckBox) layout.findViewById(R.id.checkBox_question_answer_3);
         CheckBox checkBox4 = (CheckBox) layout.findViewById(R.id.checkBox_question_answer_4);
 
+        CheckBox[] checkBoxen = new CheckBox[] {checkBox1, checkBox2, checkBox3, checkBox4};
+
         EditText editText1 = (EditText) layout.findViewById(R.id.editText_question_answer_1);
         EditText editText2 = (EditText) layout.findViewById(R.id.editText_question_answer_2);
         EditText editText3 = (EditText) layout.findViewById(R.id.editText_question_answer_3);
@@ -141,31 +141,121 @@ public class QuestionElement extends UIElement {
         editText4.setText(antworten.get(3).getText());
         editText4.setEnabled(false);
 
-        if(antworten.get(0).isCorrect() == true) {
-            checkBox1.setChecked(true);
+        for(int i = 0; i < antworten.size(); i++) {
+            if(antworten.get(i).isCorrect() == true) {
+                checkBoxen[i].setChecked(true);
+                checkBoxen[i].setBackgroundColor(Color.GREEN);
+            }
+            else {
+                checkBoxen[i].setChecked(false);
+                checkBoxen[i].setBackgroundColor(Color.RED);
+            }
+            checkBoxen[i].setEnabled(true);
+            checkBoxen[i].setTextIsSelectable(false);
+            checkBoxen[i].setFocusable(false);
+            checkBoxen[i].setClickable(false);
+            checkBoxen[i].setButtonTintList(ContextCompat.getColorStateList(container.getContext(), R.color.view_answer_checkbox_color_list));
         }
-        if(antworten.get(1).isCorrect() == true) {
-            checkBox2.setChecked(true);
-        }
-        if(antworten.get(2).isCorrect() == true) {
-            checkBox3.setChecked(true);
-        }
-        if(antworten.get(3).isCorrect() == true) {
-            checkBox4.setChecked(true);
-        }
-
-        checkBox1.setEnabled(false);
-        checkBox2.setEnabled(false);
-        checkBox3.setEnabled(false);
-        checkBox4.setEnabled(false);
 
         this.layout = layout;
         return layout;
     }
 
+    public ViewGroup show_participated(LayoutInflater layoutInflater, ViewGroup container, Question question, int number, List<Answer> chosenAnswers) {
+
+        System.out.println("--- QUESTION ELEMENT: Show Participated ---");
+        this.question = question;
+        Gson gson = new Gson();
+        String questionJson = gson.toJson(question);
+        System.out.println("Question object: " + questionJson);
+        String chosenAnswersJson = gson.toJson(chosenAnswers);
+        System.out.println("chosen answers: " + chosenAnswersJson);
+        ViewGroup layout = super.show(layoutInflater, container);
+
+        TextView textViewNumber = (TextView) layout.findViewById(R.id.textView_question_number);
+        EditText editTextQuestionText = (EditText) layout.findViewById(R.id.editText_question_questionText);
+
+        CheckBox checkBox1 = (CheckBox) layout.findViewById(R.id.checkBox_question_answer_1);
+        CheckBox checkBox2 = (CheckBox) layout.findViewById(R.id.checkBox_question_answer_2);
+        CheckBox checkBox3 = (CheckBox) layout.findViewById(R.id.checkBox_question_answer_3);
+        CheckBox checkBox4 = (CheckBox) layout.findViewById(R.id.checkBox_question_answer_4);
+
+        CheckBox[] checkBoxen = new CheckBox[] {checkBox1, checkBox2, checkBox3, checkBox4};
+
+        EditText editText1 = (EditText) layout.findViewById(R.id.editText_question_answer_1);
+        EditText editText2 = (EditText) layout.findViewById(R.id.editText_question_answer_2);
+        EditText editText3 = (EditText) layout.findViewById(R.id.editText_question_answer_3);
+        EditText editText4 = (EditText) layout.findViewById(R.id.editText_question_answer_4);
+
+        textViewNumber.setText(number+". Frage");
+
+        editTextQuestionText.setEnabled(false);
+        String fragetext = question.getText();
+        editTextQuestionText.setText(fragetext);
+
+        System.out.println("QuestionElement: anzeigen (für participated)");
+        System.out.println("Frage: " + question.getText());
+        System.out.println("Anzahl Antworten: " + question.getAnswers().size());
+
+        List<Answer> antworten = question.getAnswers();
+
+        editText1.setText(antworten.get(0).getText());
+        editText1.setEnabled(false);
+        editText2.setText(antworten.get(1).getText());
+        editText2.setEnabled(false);
+        editText3.setText(antworten.get(2).getText());
+        editText3.setEnabled(false);
+        editText4.setText(antworten.get(3).getText());
+        editText4.setEnabled(false);
+
+        for(int i = 0; i < antworten.size(); i++) {
+            if(antworten.get(i).isCorrect() == true) {
+                checkBoxen[i].setBackgroundColor(Color.GREEN);
+            }
+            else {
+                checkBoxen[i].setBackgroundColor(Color.RED);
+            }
+            checkBoxen[i].setButtonTintList(ContextCompat.getColorStateList(container.getContext(), R.color.view_answer_checkbox_color_list));
+        }
+
+        /*if(antworten.get(0).iscorrect() == true) {
+            checkbox1.setchecked(true);
+        }
+        if(antworten.get(1).iscorrect() == true) {
+            checkbox2.setchecked(true);
+        }
+        if(antworten.get(2).iscorrect() == true) {
+            checkbox3.setchecked(true);
+        }
+        if(antworten.get(3).iscorrect() == true) {
+            checkbox4.setchecked(true);
+        }*/
+
+        // antworten markieren, die der participated user gewählt hat
+        for(int i = 0; i < antworten.size(); i++) {
+            checkBoxen[i].setEnabled(true);
+            checkBoxen[i].setTextIsSelectable(false);
+            checkBoxen[i].setFocusable(false);
+            checkBoxen[i].setClickable(false);
+            checkBoxen[i].setChecked(false);
+
+            for(int j = 0; j < chosenAnswers.size(); j++) {
+                if(antworten.get(i).getAnswerid() == chosenAnswers.get(j).getAnswerid()) {
+
+                    checkBoxen[i].setChecked(true);
+                    break;
+                }
+            }
+        }
+
+        this.layout = layout;
+        return layout;
+    }
+
+
     /**
-     * Zum Erstellen einer Frage/Quiz
-     * @return Question Objekt mit allen Daten die der User eingegeben hat (Fragetext und Antworten)
+     * zum erstellen einer frage/quiz
+     * @return question objekt mit allen daten die der user eingegeben hat (fragetext und antworten)
      */
     public Question getQuestionData() {
 

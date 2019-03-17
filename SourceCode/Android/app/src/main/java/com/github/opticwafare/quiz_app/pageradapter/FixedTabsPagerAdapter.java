@@ -28,6 +28,11 @@ public abstract class FixedTabsPagerAdapter extends PagerAdapter {
         init();
     }
 
+    /*@Override
+    public void finishUpdate(@NonNull ViewGroup container) {
+        super.finishUpdate(container);
+    }*/
+
     protected abstract void init();
 
     @Override

@@ -84,7 +84,15 @@ public class MainActivity extends AppCompatActivity {
 
         if(getPagerAdapter() instanceof MainPagerAdapter) {
             MainPagerAdapter mainPagerAdapter = (MainPagerAdapter) getPagerAdapter();
-            mainPagerAdapter.getQuizzeTab().showQuizze(quizzesForLoggedInUser);
+            if(mainPagerAdapter.getQuizzeTab() != null) {
+                //mainPagerAdapter.getQuizzeTab().setQuizze(quizzesForLoggedInUser);
+                mainPagerAdapter.getQuizzeTab().showQuizze(quizzesForLoggedInUser);
+            }
+            //mainPagerAdapter.getQuizzeTab().showQuizze(quizzesForLoggedInUser);
         }
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 }
