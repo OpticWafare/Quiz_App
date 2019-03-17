@@ -176,6 +176,25 @@ private static DBManager instance;
 		}
 	}
 	
+	/**
+	 * Holt definitiv alle Quiz-Daten, die man braucht, damit man das Quiz ansehen/beantworten/ausfüllen kann
+	 * @param quizid
+	 * @return
+	 */
+	public Quiz getQuizForDisplay(int quizid) {
+		
+		EntityManager em = getEntityManager();
+		TypedQuery<Quiz> typedQuery = em.createQuery("from Quiz q LEFT JOIN FETCH Question qu ON(qu.quiz = q) LEFT JOIN FETCH Answer a ON(a.question = qu) LEFT JOIN FETCH QuizForUser qfu ON(qfu.quiz = q) LEFT JOIN FETCH User u ON(qfu.user = u) LEFT JOIN FETCH u.chosenAnswers as cha ON(cha IN (u.chosenAnswers) ) WHERE q.quizid = :quizid", Quiz.class);
+		typedQuery.setParameter("quizid", quizid);
+		try {
+			Quiz quiz = typedQuery.getSingleResult();
+			return quiz;
+		}
+		catch(NoResultException e) {
+			return null;
+		}
+	}
+	
 	public Answer getAnswerById (int answerid)
 	{
 		EntityManager em = getEntityManager();
@@ -221,7 +240,7 @@ private static DBManager instance;
 	public QuizForUser getQuizForUser (User user, Quiz quiz)
 	{
 		EntityManager em = getEntityManager();
-		TypedQuery<QuizForUser> typedQuery = em.createQuery("from QuizForUser where user = :user and quiz = :quiz", QuizForUser.class);
+		TypedQuery<QuizForUser> typedQuery = em.createQuery("select qfu from QuizForUser qfu where qfu.user = :user and qfu.quiz = :quiz", QuizForUser.class);
 		typedQuery.setParameter("user", user);
 		typedQuery.setParameter("quiz", quiz);
 		try {
@@ -237,7 +256,7 @@ private static DBManager instance;
 	public List<Quiz> getQuizzesForUser(User user)
 	{
 		EntityManager em = getEntityManager();
-		TypedQuery<Quiz> typedQuery = em.createQuery("from Quiz q left join QuizForUser qfu on(qfu.quiz=q) where q.creator = :user or qfu.user = :user", Quiz.class);
+		TypedQuery<Quiz> typedQuery = em.createQuery("select distinct q from Quiz q left join QuizForUser qfu on(qfu.quiz=q) where q.creator = :user or qfu.user = :user order by q.publishtime desc", Quiz.class);
 		typedQuery.setParameter("user", user);
 		List<Quiz> quizzesForUser = typedQuery.getResultList();
 		return quizzesForUser;
