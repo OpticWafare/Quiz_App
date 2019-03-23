@@ -33,13 +33,19 @@ public class AnswerQuizTask extends SendToServletTask {
     @Override
     protected void onPostExecute(String s) {
 
-        Toast.makeText(mainActivity, "Du hast das Quiz beantwortet!", Toast.LENGTH_SHORT).show();
-
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Timestamp.class, new TimestampLongFormatTypeAdapter())
                 .create();
 
         Quiz answeredQuiz = gson.fromJson(s, Quiz.class);
+
+        if(answeredQuiz == null) {
+            Toast.makeText(mainActivity, "Beim Beantworten des Quiz ist ein Fehler aufgetreten!", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(mainActivity, "Du hast das Quiz beantwortet!", Toast.LENGTH_SHORT).show();
+        }
+
         QuizTab quizTab = new QuizTab(answeredQuiz);
         mainActivity.getPagerAdapter().setTabAt(quizTab, 0); // TODO position variabel
         mainActivity.refreshPagerAdapter();

@@ -54,15 +54,25 @@ public class QuizTab extends SuperTab implements QuizLoadedListener {
         linearLayoutUsers = (LinearLayout) mainActivity.findViewById(R.id.linearlayout_quiz_users);
         linearLayoutQuestions = (LinearLayout) mainActivity.findViewById(R.id.linearlayout_quiz_questions);
 
-        textViewName.setText(quiz.getName() + " (Laden...)");
+        String loadingText;
+        if(quiz != null) {
+            loadingText = quiz.getName() + " (Laden...)";
+        }
+        else {
+            loadingText = "Fehler beim Laden";
+        }
+        textViewName.setText(loadingText);
 
-        GetQuizTask getQuizTask = new GetQuizTask(quiz.getQuizid());
-        getQuizTask.setQuizLoadedListener(this);
-        getQuizTask.execute("");
+        if(quiz != null) {
+            GetQuizTask getQuizTask = new GetQuizTask(quiz.getQuizid());
+            getQuizTask.setQuizLoadedListener(this);
+            getQuizTask.execute("");
+        }
     }
 
     public void showData() {
 
+        System.out.println("QuizTab - showData");
         textViewName.setText(quiz.getName());
 
         List<RankUser> rankUsers = quiz.getRankUsers();

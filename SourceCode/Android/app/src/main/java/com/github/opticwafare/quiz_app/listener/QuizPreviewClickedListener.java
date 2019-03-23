@@ -24,6 +24,7 @@ public class QuizPreviewClickedListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+        System.out.println("QuizPreviewClickedListener - onClick: forParticipating = " + forParticipating);
         if(this.forParticipating == true) {
             // Quiz anzeigen zum Ausfüllen
             AnswerQuizTab answerQuizTab = new AnswerQuizTab(quiz);

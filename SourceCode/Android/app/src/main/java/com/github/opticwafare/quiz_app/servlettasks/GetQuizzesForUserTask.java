@@ -32,6 +32,7 @@ public class GetQuizzesForUserTask extends SendToServletTask {
         Type listType = new TypeToken<ArrayList<Quiz>>(){}.getType();
         ArrayList<Quiz> quizze = gson.fromJson(s, listType);
 
+        System.out.println("GetQuizzesForUserTask - onPostExecute: setQuizzesForLoggedInUser");
         mainActivity.setQuizzesForLoggedInUser(quizze);
     }
 }

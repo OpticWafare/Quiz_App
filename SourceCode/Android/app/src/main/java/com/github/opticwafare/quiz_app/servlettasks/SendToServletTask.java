@@ -3,9 +3,11 @@ package com.github.opticwafare.quiz_app.servlettasks;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -43,7 +45,9 @@ public class SendToServletTask extends AsyncTask<String, Void, String> {
             //Send request
             DataOutputStream wr = new DataOutputStream (
                     connection.getOutputStream());
-            wr.writeBytes(urlParameters);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
+            writer.write(urlParameters);
+            writer.close();
             wr.close();
 
             //Get Response

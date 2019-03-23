@@ -23,6 +23,9 @@ public class CreateQuizTask extends SendToServletTask {
         this.creator = creator;
         this.quiz = quiz;
 
+        System.out.println("Constructor CreateQuizTask");
+        System.out.println("\tquiz.getName() = " + quiz.getName());
+
         setServletName("createQuiz");
 
         Gson gson = new GsonBuilder()
@@ -39,11 +42,23 @@ public class CreateQuizTask extends SendToServletTask {
     @Override
     protected void onPostExecute(String s) {
 
+        System.out.println("CreatedQuizTask - onPostExecute: ");
+        System.out.println("\tresponse = " + s);
+        Gson gson = new Gson();
+        Quiz createdQuiz = gson.fromJson(s, Quiz.class);
+
         GetQuizzesForUserTask getQuizzesForUserTask = new GetQuizzesForUserTask(mainActivity);
         getQuizzesForUserTask.execute("");
 
-        Toast.makeText(mainActivity, "Quiz wurde erstellt!", Toast.LENGTH_SHORT).show();
+        if(createdQuiz != null) {
+            Toast.makeText(mainActivity, "Quiz wurde erstellt!", Toast.LENGTH_SHORT).show();
+            User.getLoggedInUser().addCreatedQuiz(createdQuiz);
+        }
+        else {
+            Toast.makeText(mainActivity, "Beim Erstellen des Quiz ist ein Fehler aufgetreten!", Toast.LENGTH_LONG).show();
+        }
 
+        System.out.println("CreateQuizTask - onPostExecute: CreateQuizTab am pager adapter setzen und refreshen");
         mainActivity.getPagerAdapter().setTabAt(new CreateQuizTab(), 1); // TODO variabel
         mainActivity.refreshPagerAdapter();
     }

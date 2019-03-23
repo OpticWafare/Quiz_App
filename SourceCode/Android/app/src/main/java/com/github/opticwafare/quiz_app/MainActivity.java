@@ -80,11 +80,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setQuizzesForLoggedInUser(List<Quiz> quizzesForLoggedInUser) {
+        System.out.println("MainActivity - setQuizzesForLoggedInUser");
         this.quizzesForLoggedInUser = quizzesForLoggedInUser;
 
         if(getPagerAdapter() instanceof MainPagerAdapter) {
             MainPagerAdapter mainPagerAdapter = (MainPagerAdapter) getPagerAdapter();
             if(mainPagerAdapter.getQuizzeTab() != null) {
+                System.out.println("MainActivity - setQuizzesForLoggedInUser: quizze tab vorhanden -> show quizze");
                 //mainPagerAdapter.getQuizzeTab().setQuizze(quizzesForLoggedInUser);
                 mainPagerAdapter.getQuizzeTab().showQuizze(quizzesForLoggedInUser);
             }

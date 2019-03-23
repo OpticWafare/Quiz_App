@@ -113,6 +113,10 @@ public class User {
         this.createdQuizzes = createdQuizzes;
     }
 
+    public void addCreatedQuiz(Quiz createdQuiz) {
+        this.createdQuizzes.add(createdQuiz);
+    }
+
     public List<Answer> getChosenAnswers() {
         return chosenAnswers;
     }

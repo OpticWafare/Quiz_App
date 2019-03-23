@@ -22,7 +22,9 @@ public class CreateQuizStartButtonListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+        System.out.println("CreateQuizStartButtonListener - onClick");
         String quizName = editTextName.getText().toString();
+        System.out.println("\tquizName: " + quizName);
         int numberQuestions = Integer.parseInt(editTextNumberQuestions.getText().toString());
 
         InsertQuestionsTab insertQuestionsTab = new InsertQuestionsTab(quizName, numberQuestions);

@@ -22,7 +22,9 @@ public class InsertQuestionsFinishedButtonListener implements View.OnClickListen
     private MainActivity mainActivity;
 
     public InsertQuestionsFinishedButtonListener(String quizName, InsertQuestionsTab insertQuestionsTab, MainActivity mainActivity) {
+        System.out.println("Constructor InsertQuestionsFinishedButtonListener");
         this.quizName = quizName;
+        System.out.println("\tquizName: " + quizName);
         this.insertQuestionsTab = insertQuestionsTab;
         this.mainActivity = mainActivity;
     }
@@ -30,6 +32,8 @@ public class InsertQuestionsFinishedButtonListener implements View.OnClickListen
     @Override
     public void onClick(View v) {
 
+        System.out.println("InsertQuestionsFinishedButtonListener - onClick");
+        System.out.println("\tquizName: " + quizName);
         Quiz quiz = new Quiz();
         quiz.setName(quizName);
 

@@ -2,6 +2,7 @@ package com.github.opticwafare.quiz_app.tabs;
 
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -42,6 +43,7 @@ public class QuizzeTab extends SuperTab implements ViewPager.OnPageChangeListene
 
     public void showQuizze(List<Quiz> quizze) {
 
+        System.out.println("QuizzeTab - showQuizze");
         this.quizze = quizze;
 
         //List<Quiz> quizze = new ArrayList<Quiz>();
@@ -67,8 +69,14 @@ public class QuizzeTab extends SuperTab implements ViewPager.OnPageChangeListene
         LayoutInflater inflater = LayoutInflater.from(mainActivity);
 
         int numberViews = linearLayout.getChildCount();
+        System.out.println("QuizzeTab: linearLayout numberViews: " + numberViews);
         if(numberViews > 1) {
 
+            View headline = linearLayout.getChildAt(0);
+            linearLayout.removeAllViews();
+            linearLayout.addView(headline, 0);
+
+            /*
             //linearLayout.removeViews(1, numberViews);
             for(int i = 1; i < numberViews; i++) {
                 try {
@@ -77,7 +85,7 @@ public class QuizzeTab extends SuperTab implements ViewPager.OnPageChangeListene
                 catch (NullPointerException e) {
                     System.out.println("QuizzeTab - Quizze entfernen: View nr " + i + " war null");
                 }
-            }
+            }*/
         }
 
         for(int i = 0; i < quizze.size(); i++) {
@@ -85,6 +93,7 @@ public class QuizzeTab extends SuperTab implements ViewPager.OnPageChangeListene
             QuizPreviewElement quizPreviewElement = new QuizPreviewElement();
             ViewGroup quizPreview = quizPreviewElement.show(inflater, linearLayout, quizze.get(i), mainActivity);
             linearLayout.addView(quizPreview);
+            System.out.println("\t" + i + " Quiz zu QuizzeTab hinzugefügt");
         }
     }
 
@@ -104,6 +113,7 @@ public class QuizzeTab extends SuperTab implements ViewPager.OnPageChangeListene
     @Override
     public void onPageSelected(int position) {
 
+        System.out.println("QuizzeTab("+this+") - onPageSelected. Position: " + position);
         // TODO standartisieren
         if(position == 0 && mainActivity.getPagerAdapter() instanceof MainPagerAdapter) {
             //showQuizze(this.quizze); // TODO
