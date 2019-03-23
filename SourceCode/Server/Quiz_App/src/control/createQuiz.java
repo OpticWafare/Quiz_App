@@ -2,7 +2,9 @@ package control;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,7 @@ import model.Answer;
 import model.DBManager;
 import model.Question;
 import model.Quiz;
+import model.SingleQuizToQuizIdTypeAdapter;
 import model.TimestampLongFormatTypeAdapter;
 import model.User;
 
@@ -46,7 +49,10 @@ public class createQuiz extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    int creator = Integer.parseInt(request.getParameter("creator"));
+	    
+		System.out.println("=== CREATE QUIZ ===");
+		
+		int creator = Integer.parseInt(request.getParameter("creator"));
 		String quizJson = request.getParameter("quiz");
 		
 		DBManager dbManager = DBManager.getInstance();
@@ -78,6 +84,39 @@ public class createQuiz extends HttpServlet {
 		
 		List<User> allUsersExceptCreator = dbManager.getAllUsersExceptCreator(user);
 		dbManager.addParticipatingUsersToQuiz(allUsersExceptCreator, quiz);
+		
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Quiz.class, new SingleQuizToQuizIdTypeAdapter());
+		Gson gsonResponse = gsonBuilder.create();
+		
+		String jsonResponse = gsonResponse.toJson(quiz);
+		System.out.println("createQuiz: Response JSON = " + jsonResponse);
+		response.getWriter().append(jsonResponse);
+		
+		System.out.println("--- createQuiz: Notification an Teilnehmer ---");
+	
+		long publishTime = quiz.getPublishtime().getTime();
+		Calendar c = Calendar.getInstance();
+		c.setTimeZone(TimeZone.getTimeZone("GMT"));
+		long currentTime = c.getTime().getTime();
+		
+		int tolerance = 30000;
+		
+		// Soll die Notification JETZT gesendet werden? (Weil das Quiz jetzt gepublished wurde)
+		if( (currentTime-tolerance < publishTime)
+				&& (currentTime+tolerance > publishTime)) {
+			
+			String fcmToken;
+			for(int i = 0; i < allUsersExceptCreator.size(); i++) {
+				
+				fcmToken = allUsersExceptCreator.get(i).getFcmtoken();
+				try {
+					NotificationSender.sendNotification(fcmToken, "Neues Quiz verfügbar!", user.getUsername()+" hat das Quiz "+quiz.getName()+" für dich freigegeben!");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "quizapp-ff98f",
+  "private_key_id": "cc3409eacc277ec7964aab5d51740644b822a4ee",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDSzWwt0GaXwVcZ\npIGtpROIi0heIER+TFogLOyHfNKflONgdLhmEs9CvozOc6vpccpoO/zkrvFyXt2V\nbWKMScnYR0U4ffYw85mHLi+ag5zucvuNB5/Bs7m6kU5b5BgSCvw4glnD01bwp484\nqiofUZnAG1Oc9FMmM8d0vThYZlcAEkk4xs1nUnodatb5dixy3g9nBlvBdMPidlSi\n6q7Zgh9wwNZrzN6TyIblYP4IV26st3riHJXoLnrr5+1FD/PEoLwVfsVEHljBPjHU\ng3yU5iNViGxJICRYhM+9OXqiEmLWG6UqSc3utERt1Zb1FtEV12KnhytLbWSwRiTV\nDH+m9n/LAgMBAAECggEAA8dl8eOjVdjD7cmVVN5kMsBDHFjaEXo0lWYTbrxYmZQV\niA707UjXXqbEJxagwCRnkKXJUJ99juN6ImnIaKO7/WdjAMe/8ucIW17Ya0iCYYM9\n1Nc2+xsfMGPWx+6XVd93ilsf2ShVOHwwej9mq5K5aF21CoJraSsSyhodmUwVsYJv\nYfsaa5ksbEyt8UKpz4gV07Wz5huef7o2UeyTnZ34O5G4GcB2p//UqvzSfy400Nxs\nuqNAc9D0fXyikg/F+2WiYiM0tj0MAWcDDCvcTej74+ThFOBSKzg42gDG6M1JY9pq\np26S1bGuJomePI3+uPR/L3HMjBXpzHLJ/gK/fky2PQKBgQD8/qblcvVB5Q19Nnvw\nkdwes/Nl9YRmRMgfHIb98L9bPzIKzn6UEGxDLt9ojFJ7JvnoD87azsdEYaZ8nD1p\n6kO+hnpJ9lkndwowxU021IUFiKN81e9ZWxa4hMYpwCZTVI0JD6/kZ5DGWxObLZ/P\n4iugU10mPle5/oe4Q1xBrRK/xwKBgQDVTncgDpndXEKRhYrCyozGgduWy7eUIAyy\nNWNkT3KAdBn2VHCFm/x+8xXe2DiFwdRTJNINFrMV508xGQpP7R0oBuGTyzCaHMQ7\nDeyy+JJn80ulTqPx6cUXWmEH+gfD3Pkps45XcCWGFpXMYkVfDm8wDksR+Ad98gGW\nafD+qjOH3QKBgB8DkK4cE5jKXYb2AOeS2eshoDrliB+JWwcFVj8XHj4vVxEgE0BP\naxYpTtXgLdRPCN+74F3Ob3sghWpNNPIg98EJd0BN5MwDucoUxcxs7QmqoHATQc4w\nbm6cSDaiCZC5kriDpcpYL9VBIPwq8aZoUXTMA2VGyzZPz491IoAimWPNAoGAViI5\nOFitCRYYS2sBfWcNMZt+cIYSu121wsCMQhVSx0war72pMkqqyxid3D6zlE+QzYIw\nz9g6uL2O3OSfpWa6P0+IB4YlOhYjpzUYP6zgcdls0nPPAADF9YgpZm8wc4bnlk9L\nS0Od42d7VezY1mmdvGoJJlhhrhnrSjG9fxh7doECgYEAy6upH6o1FOyJfkZNjShE\nQnzTnTCXwB52MgL7Q8qTV+JargYWZ5qqlZFfgTkdj8M0Q0+cKwK32LGvEsOfe/sd\nTnwfeCMX1cF/qhorVdtKTBX7/rVa5+hpFT0Exc19Y8T7otf4447pW54cw0w4qox3\nwa92Q7Mt41PvKKrfDhWyD6Y=\n-----END PRIVATE KEY-----\n",
+  "client_email": "quizapp-ff98f@appspot.gserviceaccount.com",
+  "client_id": "101405469908555495972",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/quizapp-ff98f%40appspot.gserviceaccount.com"
+}

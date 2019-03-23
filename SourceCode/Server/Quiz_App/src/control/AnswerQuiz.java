@@ -91,5 +91,18 @@ public class AnswerQuiz extends HttpServlet {
 		System.out.println("Quiz shell JSON: " + quizJson);
 		
 		response.getWriter().append(quizJson);
+		
+		System.out.println("-----");
+		
+		System.out.println("Sende Nachricht an Quiz-Ersteller");
+		String fcmTokenOfCreator = dbManager.getFCMTokenOfQuizCreator(quiz);
+		try {
+			String message = user.getUsername()+" hat das Quiz "+quiz.getName()+" ausgefüllt!";
+			String title = "Eines deiner Quizze wurde beantwortet!";
+			NotificationSender.sendNotification(fcmTokenOfCreator, title, message);
+		} catch (Exception e) {
+			System.out.println("Senden der Notification nicht erfolgreich");
+			e.printStackTrace();
+		}
 	}
 }

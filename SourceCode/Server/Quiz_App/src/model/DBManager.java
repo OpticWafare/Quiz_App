@@ -294,6 +294,20 @@ private static DBManager instance;
 		
 		em.getTransaction().commit();
 	}
+	
+	public String getFCMTokenOfQuizCreator(Quiz quiz) {
+		
+		EntityManager em = getEntityManager();
+		TypedQuery<String> fcmTokenQuery = em.createQuery("SELECT u.fcmtoken FROM Quiz q JOIN User u ON(q.creator=u) WHERE q = :quiz", String.class);
+		fcmTokenQuery.setParameter("quiz", quiz);
+		try {
+			String fcmToken = fcmTokenQuery.getSingleResult();
+			return fcmToken;
+		}
+		catch(NoResultException e) {
+			return null;
+		}
+	}
 
 	
 	public static void main(String[] args) {

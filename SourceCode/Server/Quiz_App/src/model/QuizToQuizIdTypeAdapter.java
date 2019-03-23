@@ -28,8 +28,6 @@ public class QuizToQuizIdTypeAdapter extends TypeAdapter<List<Quiz>> {
 	@Override
 	public void write(JsonWriter out, List<Quiz> quizzes) throws IOException {
 		
-		
-		
 		out.beginArray();
 		for(int i = 0; i < quizzes.size(); i++) {
 			int quizId = quizzes.get(i).getQuizid();
