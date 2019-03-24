@@ -22,6 +22,8 @@ import model.UserForQuizDisplayTypeAdapter;
 
 /**
  * Servlet implementation class GetQuiz
+ * 
+ * Sendet die Daten von dem angegebenen Quiz zurück
  */
 @WebServlet("/GetQuiz")
 public class GetQuiz extends HttpServlet {

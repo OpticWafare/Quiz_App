@@ -17,6 +17,14 @@ import com.google.gson.GsonBuilder;
 
 import model.User;
 
+/**
+ * Enthält alle Datenbank-Methoden.
+ * 
+ * Die DB ist mit JPA und EclipseLink realisiert worden.
+ * 
+ * @author User
+ *
+ */
 public class DBManager {
 
 private static DBManager instance;
@@ -63,6 +71,12 @@ private static DBManager instance;
 	
 	//////////////////////////////////
 	
+	/**
+	 * Versucht den User mit email adresse und Passwort einzuloggen
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	public User loginUserEmail(String email, String password) {
 		EntityManager em = getEntityManager();
 		TypedQuery<User> typedQuery = em.createQuery("from User u where u.email = :email and u.password = :password", User.class);
@@ -77,6 +91,12 @@ private static DBManager instance;
 		}
 	}
 	
+	/**
+	 * Versucht den User mit username und Passwort einzuloggen
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	public User loginUserUsername(String username, String password) {
 		EntityManager em = getEntityManager();
 		TypedQuery<User> typedQuery = em.createQuery("from User u where u.username = :username and u.password = :password", User.class);
@@ -210,6 +230,11 @@ private static DBManager instance;
 		}
 	}
 	
+	/**
+	 * Gibt das Quiz zurück, in dem die angegebene Antwort vorkommt
+	 * @param answerid
+	 * @return
+	 */
 	public Quiz getQuizFromAnswerId (int answerid)
 	{
 		EntityManager em = getEntityManager();
@@ -253,6 +278,13 @@ private static DBManager instance;
 		}
 	}
 	
+	/**
+	 * Verwendet in GetQuizzesForUser Servlet.
+	 * Holt alle Quizze, die der User zum Anzeigen in der Quizze-Liste benötigt.
+	 * (die Quizze die er erstellt hat und die bei denen er teilnimmt)
+	 * @param user
+	 * @return
+	 */
 	public List<Quiz> getQuizzesForUser(User user)
 	{
 		EntityManager em = getEntityManager();
@@ -270,6 +302,12 @@ private static DBManager instance;
 		em.getTransaction().commit();
 	}
 	
+	/**
+	 * Holt alle registrierten User aus der DB bis auf den angegebenen User.
+	 * Verwendung um z.B. alle Teilnehmer eines Quizzes zu holen
+	 * @param user
+	 * @return
+	 */
 	public List<User> getAllUsersExceptCreator (User user)
 	{
 		EntityManager em = getEntityManager();
@@ -279,6 +317,11 @@ private static DBManager instance;
 		return allUsersExceptCreator;
 	}
 	
+	/**
+	 * Fügt die angegebenen User als Teilnehmer zum Quiz hinzu
+	 * @param users
+	 * @param quiz
+	 */
 	public void addParticipatingUsersToQuiz (List<User> users, Quiz quiz)
 	{
 		EntityManager em = getEntityManager();
@@ -295,6 +338,11 @@ private static DBManager instance;
 		em.getTransaction().commit();
 	}
 	
+	/**
+	 * Gibt den FCM Token des Erstellers des angegebenen Quizzes zurück
+	 * @param quiz
+	 * @return
+	 */
 	public String getFCMTokenOfQuizCreator(Quiz quiz) {
 		
 		EntityManager em = getEntityManager();
@@ -309,7 +357,10 @@ private static DBManager instance;
 		}
 	}
 
-	
+	/**
+	 * NUR TEST
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		DBManager dbManager = getInstance();
 		User testuser = dbManager.getUserByUsername("Test01");

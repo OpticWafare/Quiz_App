@@ -26,6 +26,8 @@ import model.User;
 
 /**
  * Servlet implementation class AnswerQuiz
+ * 
+ * Wenn App-Benutzer ein Quiz beantwortet hat
  */
 @WebServlet("/AnswerQuiz")
 public class AnswerQuiz extends HttpServlet {

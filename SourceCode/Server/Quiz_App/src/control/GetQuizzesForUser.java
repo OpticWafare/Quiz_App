@@ -20,6 +20,9 @@ import model.User;
 
 /**
  * Servlet implementation class GetQuizzesForUser
+ * 
+ * Holt alle Quizze, die der User zum Anzeigen in der Quizze-Liste benötigt.
+ * (die Quizze die er erstellt hat und die bei denen er teilnimmt)
  */
 @WebServlet("/GetQuizzesForUser")
 public class GetQuizzesForUser extends HttpServlet {

@@ -25,6 +25,8 @@ import model.User;
 
 /**
  * Servlet implementation class createQuiz
+ * 
+ * Wenn App-Benutzer ein Quiz erstellt hat
  */
 @WebServlet("/createQuiz")
 public class createQuiz extends HttpServlet {
@@ -53,7 +55,9 @@ public class createQuiz extends HttpServlet {
 		System.out.println("=== CREATE QUIZ ===");
 		
 		int creator = Integer.parseInt(request.getParameter("creator"));
+		request.setCharacterEncoding("UTF-8");
 		String quizJson = request.getParameter("quiz");
+		System.out.println("Received quiz JSON = " + quizJson);
 		
 		DBManager dbManager = DBManager.getInstance();
 		User user = dbManager.getUserByUserid(creator);
