@@ -16,6 +16,13 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Ein Fragen-und-Antwort Block.
+ * Beinhaltet 1 Fragetext und 4 Antwort-Texte mit jeweiliger Checkbox
+ *
+ * Wird zum Erstellen, Ausfüllen und Ansehen (für Creator und Teilnehmer) verwendet.
+ * Siehe unterschiedliche "show_" Methoden für unterschiedliche Zwecke
+ */
 public class QuestionElement extends UIElement {
 
     /**
@@ -161,6 +168,15 @@ public class QuestionElement extends UIElement {
         return layout;
     }
 
+    /**
+     * Zeigt den Frage-und Antwortenblock an für Teilnehmer die bereits teilgenommen haben
+     * @param layoutInflater
+     * @param container
+     * @param question
+     * @param number
+     * @param chosenAnswers
+     * @return
+     */
     public ViewGroup show_participated(LayoutInflater layoutInflater, ViewGroup container, Question question, int number, List<Answer> chosenAnswers) {
 
         System.out.println("--- QUESTION ELEMENT: Show Participated ---");

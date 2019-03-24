@@ -1,11 +1,13 @@
 package com.github.opticwafare.quiz_app.model;
 
+import android.support.annotation.NonNull;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Quiz {
+public class Quiz implements Comparable<Quiz> {
 
     private int quizid;
     private User creator;
@@ -37,6 +39,10 @@ public class Quiz {
     public Quiz() {
     }
 
+    /**
+     *
+     * @return Anzahl der Teilnehmer die das Quiz schon ausgefüllt haben
+     */
     public int getNumberOfCompletedUsers() {
         int counter = 0;
         for(int i = 0; i < participatingUsers.size(); i++) {
@@ -47,6 +53,9 @@ public class Quiz {
         return counter;
     }
 
+    /**
+     * @return Alle RankUser Objekte fixfertig für die GUI Darstellung
+     */
     public List<RankUser> getRankUsers() {
 
         List<RankUser> rankUsers = new ArrayList<RankUser>();
@@ -104,11 +113,19 @@ public class Quiz {
         return rankUsers;
     }
 
+    /**
+     * Vergibt Ränge zu den angegebenen RankUsern
+     * VORAUSSETZUNG: Rank User sind bereits nach den Punkten absteigend sortiert!
+     * @param rankUsers
+     * @return
+     */
     public List<RankUser> rankRankUsers(List<RankUser> rankUsers) {
 
         int currentRank = 1;
         for(int i = 0; i < rankUsers.size(); i++) {
 
+            // Wenn der RankUser das Quiz noch nicht ausgefüllt hat -> ein '?' anstatt des Ranges anzeigen.
+            // (Rank = -1 wird in der GUI als '?' angezeigt)
             if(rankUsers.get(i).hasAnsweredQuiz() == false) {
                 rankUsers.get(i).setRank(-1);
             }
@@ -116,6 +133,7 @@ public class Quiz {
                 rankUsers.get(i).setRank(currentRank);
 
                 if(i < rankUsers.size()-1) {
+                    // Wenn zwei Leute hintereinander die gleiche Punktezahl haben, bekommen sie den gleichen Rank
                     if(rankUsers.get(i).getPointsAchieved() != rankUsers.get(i+1).getPointsAchieved()) {
                         currentRank++;
                     }
@@ -125,6 +143,12 @@ public class Quiz {
         return rankUsers;
     }
 
+    /**
+     * Tauscht die Position des ersten- und zweiten angegebenen RankUser in der angegebenen Liste
+     * @param rankUsers
+     * @param index1 Index des ersten RankUsers
+     * @param index2 Index des zweiten Rank users
+     */
     private void swapRankUsers(List<RankUser> rankUsers, int index1, int index2) {
 
         RankUser temp = rankUsers.get(index1);
@@ -281,5 +305,19 @@ public class Quiz {
 
     public void setParticipatingUsers(List<QuizForUser> participatingUsers) {
         this.participatingUsers = participatingUsers;
+    }
+
+    /**
+     * Verwendet zum Sortieren der Quizze (nach Veröffentlichungszeit)
+     * TODO abfangen von getPublishtime() = null
+     * @param otherQuiz
+     * @return
+     */
+    @Override
+    public int compareTo(@NonNull Quiz otherQuiz) {
+        long thisTime = this.publishtime.getTime();
+        long otherTime = otherQuiz.getPublishtime().getTime();
+        long difference = thisTime - otherTime;
+        return (int) difference;
     }
 }

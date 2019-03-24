@@ -10,6 +10,12 @@ import com.github.opticwafare.quiz_app.listener.QuizPreviewClickedListener;
 import com.github.opticwafare.quiz_app.model.Quiz;
 import com.github.opticwafare.quiz_app.model.User;
 
+/**
+ * Zeigt kurzinfos über ein Quiz.
+ * Klickt man drauf öffnet sich das Quiz (zum Ansehen oder ausfüllen)
+ *
+ * Wird verwendet in QuizzeTab
+ */
 public class QuizPreviewElement extends UIElement {
 
     public QuizPreviewElement() {

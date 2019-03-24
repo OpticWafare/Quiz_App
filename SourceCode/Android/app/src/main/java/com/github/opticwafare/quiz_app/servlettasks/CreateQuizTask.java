@@ -11,7 +11,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+/**
+ * Lässt ein neues Quiz in die DB eintragen,
+ * nachdem der Benutzer alle Fragen, Antworten und den Quiznamen eingetragen hat
+ */
 public class CreateQuizTask extends SendToServletTask {
 
     private MainActivity mainActivity;
@@ -53,6 +58,9 @@ public class CreateQuizTask extends SendToServletTask {
         if(createdQuiz != null) {
             Toast.makeText(mainActivity, "Quiz wurde erstellt!", Toast.LENGTH_SHORT).show();
             User.getLoggedInUser().addCreatedQuiz(createdQuiz);
+            //List<Quiz> quizzesForLoggedInUser = mainActivity.getQuizzesForLoggedInUser();
+            //quizzesForLoggedInUser.add(createdQuiz);
+            //mainActivity.setQuizzesForLoggedInUser(quizzesForLoggedInUser);
         }
         else {
             Toast.makeText(mainActivity, "Beim Erstellen des Quiz ist ein Fehler aufgetreten!", Toast.LENGTH_LONG).show();

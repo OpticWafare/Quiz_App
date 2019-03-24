@@ -6,6 +6,10 @@ import com.github.opticwafare.quiz_app.tabs.QuizTab;
 import com.github.opticwafare.quiz_app.tabs.QuizzeTab;
 import com.github.opticwafare.quiz_app.tabs.SettingsTab;
 
+/**
+ * Enthält & managed alle Tabs die angezeigt werden sollen
+ * nachdem der User eingeloggt ist
+ */
 public class MainPagerAdapter extends FixedTabsPagerAdapter {
 
     public MainPagerAdapter(MainActivity mainActivity) {

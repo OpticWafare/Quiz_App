@@ -1,5 +1,6 @@
 package com.github.opticwafare.quiz_app.tabs;
 
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,16 +36,27 @@ public class QuizzeTab extends SuperTab implements ViewPager.OnPageChangeListene
         mainActivity.getViewPager().removeOnPageChangeListener(this);
         mainActivity.getViewPager().addOnPageChangeListener(this);
 
-        List<Quiz> quizze = mainActivity.getQuizzesForLoggedInUser();
+        final List<Quiz> quizze = mainActivity.getQuizzesForLoggedInUser();
+        System.out.println("QuizzeTab init: quizze from mainacitivity: " + quizze);
         if(quizze != null) {
-            showQuizze(quizze);
+            System.out.println("\tQuizzeTab init: quizze not null ; size=" + quizze.size());
+            System.out.println("\tshowQuizze");
+
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    // Code here will run in UI thread
+                    showQuizze(quizze);
+                }
+            });
         }
     }
 
     public void showQuizze(List<Quiz> quizze) {
 
         System.out.println("QuizzeTab - showQuizze");
-        this.quizze = quizze;
+        System.out.println("\tOld Quizzes = " + this.quizze);
+        System.out.println("\tNew Quizzes = " + quizze);
 
         //List<Quiz> quizze = new ArrayList<Quiz>();
 
@@ -70,7 +82,18 @@ public class QuizzeTab extends SuperTab implements ViewPager.OnPageChangeListene
 
         int numberViews = linearLayout.getChildCount();
         System.out.println("QuizzeTab: linearLayout numberViews: " + numberViews);
+
         if(numberViews > 1) {
+
+            System.out.println("\tnumberviews > 1 => quizzes have not been unloaded => only update GUI if quiz-list has been changed");
+            System.out.println("\tcomparing quizzes");
+            if((this.quizze != null) && (this.quizze.equals(quizze))) {
+                System.out.println("\told and new quiz are equal! -> not updating UI");
+                this.quizze = quizze;
+                return;
+            }
+            System.out.println("\told and new quiz are not equal -> updating ui");
+            this.quizze = quizze;
 
             View headline = linearLayout.getChildAt(0);
             linearLayout.removeAllViews();
@@ -88,6 +111,7 @@ public class QuizzeTab extends SuperTab implements ViewPager.OnPageChangeListene
             }*/
         }
 
+        System.out.println("QuizzeTab: quizze list = " + quizze + " ; size = " + quizze.size());
         for(int i = 0; i < quizze.size(); i++) {
 
             QuizPreviewElement quizPreviewElement = new QuizPreviewElement();
@@ -95,6 +119,7 @@ public class QuizzeTab extends SuperTab implements ViewPager.OnPageChangeListene
             linearLayout.addView(quizPreview);
             System.out.println("\t" + i + " Quiz zu QuizzeTab hinzugefügt");
         }
+        System.out.println("All quizzes added to quizzeTab. NumberViews = " + linearLayout.getChildCount());
     }
 
     public List<Quiz> getQuizze() {

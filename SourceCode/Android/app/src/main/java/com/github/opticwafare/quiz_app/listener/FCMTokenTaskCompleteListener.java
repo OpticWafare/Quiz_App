@@ -8,7 +8,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.InstanceIdResult;
 
 /**
- * Dieser Listener wird aufgerufen wenn der Task zum Erhalten des FCM Tokens abgeschlossen ist
+ * Dieser Listener wird aufgerufen wenn der Task zum Erhalten des FCM Tokens abgeschlossen ist.
+ *
+ * Allgemein: FCMToken ist eindeutig PRO Android-Gerät PRO App.
+ * Er kann sich aber mit der Zeit ändern.
+ * Wird als "Adresse" des Handys verwendet, zum Senden von Push-Notifications.
+ *
+ * TODO Der FCM Token sollte (wenn er sich ändert) auch in der DB aktualisiert werden
  */
 public class FCMTokenTaskCompleteListener implements OnCompleteListener<InstanceIdResult> {
 

@@ -13,6 +13,11 @@ import com.github.opticwafare.quiz_app.model.Question;
 
 import java.util.ArrayList;
 
+/**
+ * Zum Erstellen eines neuen Quizzes.
+ *
+ * Zeigt so viele leere Frage-Blöcke untereinander an, wie im vorherigen Schritt (CreateQuizTab) eingegeben wurden.
+ */
 public class InsertQuestionsTab extends SuperTab {
 
     public InsertQuestionsTab() {

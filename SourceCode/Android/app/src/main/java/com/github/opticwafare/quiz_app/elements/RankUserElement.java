@@ -10,6 +10,13 @@ import com.github.opticwafare.quiz_app.model.RankUser;
 
 import java.time.format.TextStyle;
 
+/**
+ * Zeigt den Rang, Namen, Punkte und Ausfüll-Zeitpunkt
+ * von einem User bei einem Quiz an.
+ *
+ * Hauptbestandteil der Rangliste.
+ * Wird verwendet in QuizTab.
+ */
 public class RankUserElement extends UIElement {
 
     public RankUserElement() {

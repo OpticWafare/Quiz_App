@@ -53,7 +53,9 @@ public class LoginTask extends SendToServletTask {
             loginTab.getEditTextUsername().clearFocus();
             loginTab.getEditTextPassword().clearFocus();
 
+            // Von den Login-Tabs zu den Haupt-Tabs wechseln
             loginTab.getMainActivity().setPagerAdapter(new MainPagerAdapter(loginTab.getMainActivity()));
+            // Quizze für die Quizze-Liste laden
             GetQuizzesForUserTask getQuizzesForUserTask = new GetQuizzesForUserTask(loginTab.getMainActivity());
             getQuizzesForUserTask.execute("");
         }

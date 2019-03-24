@@ -63,11 +63,13 @@ public class QuizTab extends SuperTab implements QuizLoadedListener {
         }
         textViewName.setText(loadingText);
 
+        // Restliche Daten des Quizzes laden (zurzeit hat das Quiz-Objekt nur die Quiz-ID)
         if(quiz != null) {
             GetQuizTask getQuizTask = new GetQuizTask(quiz.getQuizid());
             getQuizTask.setQuizLoadedListener(this);
             getQuizTask.execute("");
         }
+        // (wenn das Quiz-Objekt null wäre, dann ist etwas falsch geleaufen)
     }
 
     public void showData() {

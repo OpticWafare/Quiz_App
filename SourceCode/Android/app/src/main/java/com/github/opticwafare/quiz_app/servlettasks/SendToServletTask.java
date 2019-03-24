@@ -11,14 +11,33 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Super-Klasse für alle (asynchronen) Netzwerk-Tasks.
+ * Diese werden für die Kommunikation zu den Servlets verwendet.
+ * z.B. um Daten vom Servlet/Datenbank zu holen oder zu senden.
+ */
 public class SendToServletTask extends AsyncTask<String, Void, String> {
+
+    /** Name des Servlets (MUSS EINGESTELLT WERDEN) */
     private String servletName;
+    /** (GET-)Parameter für das Servlet
+     * z.B. quizid=10&name=quiztest */
     private String urlParameters;
 
+    /** IP Adresse des Servers auf dem die Servlets laufen
+     * (kann von EditTextIPAddressChangedListener verändert werden) */
     private static String serverIPAddress = "192.168.1.125";
     private static int serverPort = 8080;
     private static String serverName = "Quiz_App";
 
+    /**
+     *
+     * ACHTUNG: zum Ausführen des Tasks muss die Methode execute("") ausgeführt werden!
+     *
+     * Starten die (asynchrone) Verbindung zum Servlet
+     * @param strings nicht verwendet
+     * @return
+     */
     @Override
     protected String doInBackground(String... strings) {
 
@@ -66,7 +85,12 @@ public class SendToServletTask extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         } finally {
             if (connection != null) {
-                connection.disconnect();
+                try {
+                    connection.disconnect();
+                }
+                catch (Exception e2) {
+                    e2.printStackTrace();
+                }
             }
         }
 

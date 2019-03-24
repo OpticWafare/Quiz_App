@@ -8,8 +8,16 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 
+/**
+ * Für GSON
+ *
+ * Transformation von Timestamp von/zu JSON
+ */
 public class TimestampLongFormatTypeAdapter extends TypeAdapter<Timestamp> {
 
+    /**
+     * Wie soll ein Timestamp aus JSON geschrieben werden?
+     */
     @Override
     public void write(JsonWriter out, Timestamp value) throws IOException {
         if(value == null) {
@@ -20,6 +28,12 @@ public class TimestampLongFormatTypeAdapter extends TypeAdapter<Timestamp> {
         }
     }
 
+    /**
+     * Wie soll ein Timestamp von JSON in ein Objekt verwandelt werden?
+     * @param in
+     * @return
+     * @throws IOException
+     */
     @Override
     public Timestamp read(JsonReader in) throws IOException {
         long value = in.nextLong();
@@ -30,5 +44,4 @@ public class TimestampLongFormatTypeAdapter extends TypeAdapter<Timestamp> {
             return new Timestamp(value);
         }
     }
-
 }
